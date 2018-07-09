@@ -44,6 +44,6 @@ class Solution:
 
 
 
-#print(Solution.twoSum(array, 16021))
+print(Solution.twoSum(array, 16021))
 
 print(Solution.twoSum([3,3], 6))
