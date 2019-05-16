@@ -7,7 +7,7 @@
 #Explanation: 342 + 465 = 807.
 
  #Definition for singly-linked list.
-
+import mypy
 
 class ListNode:
  def __init__(self, x):
@@ -17,22 +17,22 @@ class ListNode:
 
 class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        _result = node = ListNode(0)
+        _result = curr_node = ListNode(0)
         carry = 0
         while l1 or l2:
             v1 = l1.val if l1 else 0
             v2 = l2.val if l2 else 0
-            valuesum = v1 + v2 + carry
-            node.next = ListNode(valuesum % 10)
-            node = node.next
-            carry = valuesum // 10
+            value_sum = v1 + v2 + carry
+            curr_node.next = ListNode(value_sum % 10)
+            curr_node = curr_node.next
+            carry = value_sum // 10
             l1 = l1.next if l1 else None
             l2 = l2.next if l2 else None
         if carry > 0:
-            node.next = ListNode(carry)
+            curr_node.next = ListNode(carry)
         return _result.next
 
-    def printlist(self, l: ListNode):
+    def printlist(self, l: ListNode) -> list:
         li = []
         while l:
             li.append(l.val)
