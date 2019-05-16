@@ -1,0 +1,31 @@
+class Solution:
+    def mySqrt(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        if x == 0 or x == 1:
+            return x
+        else:
+            return self.sqrtBinarySearch(0,x//2,x)
+
+    def sqrtBinarySearch(self,start,end, target):
+
+        if start == end-1 or start == end:
+            if end * end > target:
+                return start
+            else:
+                return end
+        else:
+            middle = (start+end)//2
+            if middle*middle > target:
+                return self.sqrtBinarySearch(start, middle-1, target)
+            elif middle*middle == target:
+                return middle
+            else:
+                return self.sqrtBinarySearch(middle, end, target)
+
+
+solved =Solution()
+
+print(solved.mySqrt(19))
