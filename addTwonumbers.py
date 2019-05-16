@@ -22,9 +22,10 @@ class Solution:
         while l1 or l2:
             v1 = l1.val if l1 else 0
             v2 = l2.val if l2 else 0
-            node.next = ListNode((v1 + v2 + carry) % 10)
+            valuesum = v1 + v2 + carry
+            node.next = ListNode(valuesum % 10)
             node = node.next
-            carry = (v1 + v2 + carry) // 10
+            carry = valuesum // 10
             l1 = l1.next if l1 else None
             l2 = l2.next if l2 else None
         if carry > 0:
@@ -34,9 +35,8 @@ class Solution:
     def printlist(self, l: ListNode):
         li = []
         while l:
-            val = l.val
+            li.append(l.val)
             l = l.next
-            li.append(val)
         return li
 
 
