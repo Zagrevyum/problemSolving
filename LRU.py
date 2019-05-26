@@ -24,9 +24,9 @@ class LRUCache:
     def get(self, key: int) -> int:
         if self.cache.get(key):
             self.update(key, self.cache[key])
-            print(self.cache[key])
+            return self.cache[key]
         else:
-            print(-1)
+            return -1
 
     def put(self, key: int, value: int) -> None:
         if not self.cache.get(key):
