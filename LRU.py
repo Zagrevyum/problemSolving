@@ -15,30 +15,30 @@ class LRUCache:
 
     def __init__(self, capacity: int):
         self.cache = {}
-        self.limit = capacity
+        self.capacity = capacity
 
     def update(self, key: int, value: int):
-        del [self.cache[key]]
+        del self.cache[key]
         self.cache[key] = value
 
     def get(self, key: int) -> int:
-        if self.cache.get(key):
-            self.update(key, self.cache[key])
-            return self.cache[key]
-        else:
-            return -1
+        value = self.cache.get(key)
+        if value:
+            self.update(key, value)
+            return value
+        return -1
 
     def put(self, key: int, value: int) -> None:
         if not self.cache.get(key):
-            if len(self.cache) < self.limit:
+            if len(self.cache) < self.capacity:
                 self.cache[key] = value
-            else:
-                for k in self.cache:
-                    del[self.cache[k]]
-                    break
-                self.cache[key] = value
-        else:
-            self.update(key, value)
+                return None
+            for k in self.cache:
+                del[self.cache[k]]
+                break
+            self.cache[key] = value
+            return None
+        self.update(key, value)
 
 cache = LRUCache(2)
 
