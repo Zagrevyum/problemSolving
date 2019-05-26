@@ -34,11 +34,12 @@ class LRUCache:
                 self.cache[key] = value
                 return None
             for k in self.cache:
-                del[self.cache[k]]
+                del self.cache[k]
                 break
             self.cache[key] = value
             return None
         self.update(key, value)
+        return None
 
 cache = LRUCache(2)
 
