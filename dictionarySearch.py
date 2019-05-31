@@ -13,11 +13,11 @@ d = {'a' : 'apple','b' : 'bobb','c' : {'d' : {'f':'dog'}},'e' : {'g':'dog'}}
 
 
 def value_search(value: int, dictionary: dict, matches=[], temp=""):
-    for key in dictionary:
-        if type(dictionary[key]) is dict:
+    for key, stored_value in dictionary.items():
+        if isinstance(stored_value, dict):
             temp += key + "."
-            value_search(value, dictionary[key], matches, temp)
-        if value == dictionary[key]:
+            value_search(value, stored_value, matches, temp)
+        if value == stored_value:
             temp += key
             matches.append(temp)
         temp = ""
