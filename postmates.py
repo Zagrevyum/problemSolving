@@ -36,13 +36,12 @@ input_json = '''{
 def is_store_open(example, dt):
     today = _day_of_week(dt)
     current_time = _minutes_since_midnight(dt)
-    # print time
     rest_schedule = json.loads(example)['hours']
     for daily_schedule in rest_schedule:
         for day_open in daily_schedule['days']:
             open_time = daily_schedule['hours']['start_min']
             close_time = daily_schedule['hours']['end_min']
-            if open_time > close_time and today == day_open + 1 and current_time <= close_time:
+            if today == day_open + 1 and current_time <= close_time:
                 return True
             if today == day_open and current_time >= open_time and (open_time > close_time or current_time <= close_time):
                 return True
@@ -54,7 +53,7 @@ def is_store_open(example, dt):
 
 def _minutes_since_midnight(dt):
     midnight = datetime.datetime.combine(dt.date(), datetime.time())
-    return (dt - midnight).seconds / 60
+    return (dt - midnight).seconds // 60
 
 
 def _day_of_week(dt):
@@ -66,3 +65,7 @@ print(is_store_open(input_json, datetime.datetime.utcnow().replace(day=25, hour=
 print(is_store_open(input_json, datetime.datetime.utcnow().replace(day=26, hour=2, minute=0)))
 #sunday case False
 print(is_store_open(input_json, datetime.datetime.utcnow().replace(day=26, hour=12, minute=0)))
+#thursday case True
+print(is_store_open(input_json, datetime.datetime.utcnow().replace(day=30, hour=20, minute=0)))
+#thursday case False
+print(is_store_open(input_json, datetime.datetime.utcnow().replace(day=30, hour=21, minute=0)))
