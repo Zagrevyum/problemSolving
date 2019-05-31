@@ -1,5 +1,5 @@
 import json
-
+import datetime
 """
   monday: 10am -> 4pm
   tuesday: 10am -> 4pm
@@ -50,7 +50,6 @@ def is_store_open(example, dt):
 
 
 # Helper functions
-import datetime
 
 
 def _minutes_since_midnight(dt):
