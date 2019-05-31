@@ -34,24 +34,19 @@ input_json = '''{
 
 # {u'hours': {u'start_min': 600, u'end_min': 960}, u'days': [1, 2]}
 def is_store_open(example, dt):
-    day = _day_of_week(dt)
-    time = _minutes_since_midnight(dt)
+    today = _day_of_week(dt)
+    current_time = _minutes_since_midnight(dt)
     # print time
-    dictionary = json.loads(example)
-    for entry in dictionary['hours']:
-        for day_open in entry['days']:
-            if day == day_open and time >= entry['hours']['start_min']:
-                new_end_min = entry['hours']['end_min']
-                if entry['hours']['end_min'] < entry['hours']['start_min']:
-                    new_end_min += (24 * 60)
-                if time <= new_end_min:
-                    return True
-            if entry['hours']['end_min'] < entry['hours']['start_min'] and day == day_open + 1 and time <= \
-                    entry['hours']['end_min']:
+    rest_schedule = json.loads(example)['hours']
+    for daily_schedule in rest_schedule:
+        for day_open in daily_schedule['days']:
+            open_time = daily_schedule['hours']['start_min']
+            close_time = daily_schedule['hours']['end_min']
+            if open_time > close_time and today == day_open + 1 and current_time <= close_time:
+                return True
+            if today == day_open and current_time >= open_time and (open_time > close_time or current_time <= close_time):
                 return True
     return False
-
-    return False  # or True
 
 
 # Helper functions
@@ -66,5 +61,9 @@ def _minutes_since_midnight(dt):
 def _day_of_week(dt):
     return dt.isoweekday()
 
-
+#saturday case True
 print(is_store_open(input_json, datetime.datetime.utcnow().replace(day=25, hour=17, minute=0)))
+#sunday case True
+print(is_store_open(input_json, datetime.datetime.utcnow().replace(day=26, hour=2, minute=0)))
+#sunday case False
+print(is_store_open(input_json, datetime.datetime.utcnow().replace(day=26, hour=12, minute=0)))
