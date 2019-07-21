@@ -12,7 +12,9 @@
 d = {'a' : 'apple','b' : 'bobb','c' : {'d' : {'f':'dog'}},'e' : {'g':'dog'}}
 
 
-def value_search(value: int, dictionary: dict, matches=[], temp=""):
+def value_search(value, dictionary: dict, matches=None, temp=""):
+    if matches is None:
+        matches = []
     for key, stored_value in dictionary.items():
         if isinstance(stored_value, dict):
             temp += key + "."
