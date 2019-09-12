@@ -1,0 +1,27 @@
+def revrot(strng, sz):
+    # your code
+    tempstr = ""
+    solution = ""
+    if len(strng) == 0 or sz == 0:
+        return ""
+    for i,c in enumerate(strng):
+        tempstr = tempstr + c
+        if (i+1)% sz == 0:
+            #print i
+            solution = solution + calculate(tempstr)
+            tempstr = ""
+    #print solution
+    return solution
+
+#this function validates the conditions and processes the string rotation or reversing
+def calculate(stringtoresolve):
+      sumofcubes = 0
+      for c in stringtoresolve:
+          c = int(c)
+          sumofcubes += c**3
+      #print sumofcubes
+      if sumofcubes % 2 == 0:
+          #print sumofcubes
+          #print "string " + stringtoresolve[-1:]
+          return stringtoresolve[::-1]
+      return (stringtoresolve[1:]+stringtoresolve[0])
