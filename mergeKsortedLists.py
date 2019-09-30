@@ -4,36 +4,46 @@ class ListNode:
         self.next = None
 
 class Solution:
-    def mergeKLists(self, lists: list) -> ListNode:
-        mergedList = temp =ListNode(0)
+    def mergeKLists(self, lists: list):
+        mergedList = temp = ListNode(0)
         heap = []
         k = len(lists)
         for index in range(k):
             if lists[index] is not None and len(heap) < k:
-                #print("appending", lists[index].val)
+                # print("appending", lists[index].val)
                 heap.append(lists[index].val)
                 lists[index] = lists[index].next
-            if index < k and lists[index] is None:
-                del lists[index]
-                k -= 1
-
-        while(heap and lists):
-            print(heap)
+        while (heap and lists):
+            # print(heap)
             temp.next, heap, indextoadd = self.getMin(heap)
             temp = temp.next
-            print("adding", temp.val, "from list", indextoadd)
-            if lists[indextoadd] is not None:
-                print("inserting from index", lists[indextoadd].val, indextoadd)
-                heap.insert(indextoadd, lists[indextoadd].val)
-                lists[indextoadd] = lists[indextoadd].next
-                continue
-            del lists[indextoadd]
-            for index in range(k):
-                if lists[index] is not None and len(heap) < k:
-                        print("appending", lists[index].val, index)
-                        heap.append(lists[index].val)
-                        lists[index] = lists[index].next
-                        continue
+            # print("adding", temp.val, "from list", indextoadd)
+            if lists and len(heap) < k:
+                print(lists)
+                mini = None
+                indextomove = 0
+                index = 0
+                k = len(lists)
+                while index < k:
+                    if not lists:
+                        break
+                    if lists[index] is None:
+                        del lists[index]
+                        k -= 1
+                        index -= 1
+
+                    if mini is None and lists[index] is not None:
+                        mini = lists[index].val
+                        indextomove = index
+                    if lists[index] is not None and lists[index].val < mini:
+                        mini = lists[index].val
+                        indextomove = index
+                        # print("indextomove", indextomove)
+                    index += 1
+                if lists and lists[indextomove] is not None and mini is not None:
+                    heap.append(mini)
+                    lists[indextomove] = lists[indextomove].next
+        mergedList = mergedList.next
         return mergedList
 
     def getMin(self, numberslist):
@@ -66,10 +76,7 @@ for l in lists:
 solved = Solution()
 
 _test = _lists
-for a in lists:
-    while a:
-        print(a.val)
-        a = a.next
+
 
 
 result = solved.mergeKLists(_lists)
